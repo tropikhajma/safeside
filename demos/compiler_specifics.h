@@ -46,6 +46,8 @@
 #define SAFESIDE_LINUX 1
 #elif defined(__APPLE__)
 #define SAFESIDE_MAC 1
+#elif defined(__sun)
+#define SAFESIDE_SOLARIS 1
 #endif
 
 #endif  // DEMOS_COMPILER_SPECIFICS_H_

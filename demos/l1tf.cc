@@ -10,8 +10,8 @@
 #include "compiler_specifics.h"
 #include "hardware_constants.h"
 
-#if !SAFESIDE_LINUX
-#  error Unsupported OS. Linux required.
+#if !SAFESIDE_LINUX && !SAFESIDE_SOLARIS
+#  error Unsupported OS. Linux or Solaris required.
 #endif
 
 #if !SAFESIDE_X64 && !SAFESIDE_IA32 && !SAFESIDE_PPC

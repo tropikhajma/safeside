@@ -45,6 +45,11 @@
 #include "local_content.h"
 #include "ret2spec_common.h"
 #include "utils.h"
+#include "compiler_specifics.h"
+
+#if SAFESIDE_SOLARIS
+#include <sys/pset.h>
+#endif
 
 // Yield the CPU.
 static void Unschedule() {
@@ -81,4 +86,12 @@ int main() {
     }
   }
   std::cout << "\nDone!\n";
+#if SAFESIDE_SOLARIS
+  int res = pset_destroy(PS_MYID);
+  if (res != 0) {
+    std::cout << "pset_destroy failed:" << std::endl;
+    perror("");
+    exit(EXIT_FAILURE);
+  }
+#endif /* SAFESIDE_SOLARIS */
 }

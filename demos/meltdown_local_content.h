@@ -57,6 +57,9 @@ static void SignalHandler(
 #elif SAFESIDE_MAC && SAFESIDE_X64
   ucontext->uc_mcontext->__ss.__rip =
       reinterpret_cast<uintptr_t>(afterspeculation);
+#elif SAFESIDE_SOLARIS && SAFESIDE_X64
+  ucontext->uc_mcontext.gregs[REG_RIP] =
+      reinterpret_cast<greg_t>(afterspeculation);
 #else
 #  error Unsupported OS/CPU combination.
 #endif

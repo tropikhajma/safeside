@@ -20,8 +20,8 @@
 
 #include "compiler_specifics.h"
 
-#if !SAFESIDE_LINUX
-#  error Unsupported OS. Linux required.
+#if !SAFESIDE_LINUX && !SAFESIDE_SOLARIS
+#  error Unsupported OS. Linux or Solaris required.
 #endif
 
 #include <sched.h>
@@ -32,6 +32,10 @@
 #include <array>
 #include <cstring>
 #include <iostream>
+
+#if SAFESIDE_SOLARIS
+#include <sys/pset.h>
+#endif
 
 #include "cache_sidechannel.h"
 #include "instr.h"
@@ -163,6 +167,15 @@ void ParentProcess() {
     std::cout.flush();
   }
   std::cout << "\nDone!\n";
+#if SAFESIDE_SOLARIS
+  errno = 0;
+  int res = pset_destroy(PS_MYID);
+  if (res != 0) {
+    std::cout << "pset_destroy failed:" << std::endl;
+    perror("");
+    exit(EXIT_FAILURE);
+  }
+#endif /* SAFESIDE_SOLARIS */
 }
 
 int main() {

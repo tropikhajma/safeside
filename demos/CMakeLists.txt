@@ -147,15 +147,15 @@ add_demo(spectre_v4)
 add_demo(ret2spec_sa ADDITIONAL_SOURCES ret2spec_common.cc)
 
 # Spectre V1 BTB CA - mistraining BTB from another address space
-add_demo(spectre_v1_btb_ca SYSTEMS Linux)
+add_demo(spectre_v1_btb_ca SYSTEMS Linux SunOS)
 
 # Ret2spec CA -- rewriting the RSB using recursion from another address space
-add_demo(ret2spec_ca SYSTEMS Linux ADDITIONAL_SOURCES ret2spec_common.cc)
+add_demo(ret2spec_ca SYSTEMS Linux SunOS ADDITIONAL_SOURCES ret2spec_common.cc)
 
 # Ret2Spec -- speculative execution using return stack buffers creating a
 # call-ret disparity by inline assembly
 add_demo(ret2spec_callret_disparity
-         SYSTEMS Linux Darwin)
+         SYSTEMS Linux SunOS Darwin)
 if (TARGET ret2spec_callret_disparity)
   target_compile_options(ret2spec_callret_disparity
                          PRIVATE -fomit-frame-pointer)
@@ -166,6 +166,7 @@ add_demo(meltdown SYSTEMS Linux PROCESSORS i686 x86_64 ppc64le)
 
 # L1 terminal fault -- Foreshadow OS -- Meltdown P
 add_demo(l1tf SYSTEMS Linux PROCESSORS i686 x86_64 ppc64le)
+add_demo(l1tf SYSTEMS SunOS PROCESSORS i386)
 
 # Speculation over ERET, HVC and SMC instructions
 add_demo(eret_hvc_smc_wrapper SYSTEMS Linux PROCESSORS aarch64)
@@ -202,6 +203,10 @@ add_demo(speculation_over_single_step_trap SYSTEMS Linux PROCESSORS i686 x86_64)
 
 # Meltdown AC -- speculative fetching of unaligned data
 add_demo(meltdown_ac SYSTEMS Linux PROCESSORS i686 x86_64)
+# cmake on Solaris reports i386 even for 64 bit, as it parses uname -p
+add_demo(meltdown_ac SYSTEMS SunOS PROCESSORS i386)
 
 # Meltdown DE -- speculative computation with division by zero remainder
 add_demo(meltdown_de SYSTEMS Linux PROCESSORS i686 x86_64)
+# cmake on Solaris reports i386 even for 64 bit, as it parses uname -p
+add_demo(meltdown_de SYSTEMS SunOS PROCESSORS i386)

@@ -24,7 +24,7 @@ void ForceRead(const void *p) {
 // Flush a memory interval from cache. Used to induce speculative execution on
 // flushed values until they are fetched back to the cache.
 void FlushFromDataCache(const void *start, const void *end);
-#if SAFESIDE_LINUX
+#if SAFESIDE_LINUX || SAFESIDE_SOLARIS
 void PinToTheFirstCore();
 #endif
 #endif  // DEMOS_UTILS_H
