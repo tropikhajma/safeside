@@ -13,17 +13,17 @@
 #include <cstddef>
 #include <iostream>
 #if SAFESIDE_LINUX
-#include <sched.h>
-#include <sys/types.h>
-#include <unistd.h>
+#  include <sched.h>
+#  include <sys/types.h>
+#  include <unistd.h>
 #endif
 
 #if SAFESIDE_SOLARIS
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/processor.h>
-#include <sys/procset.h>
-#include <sys/pset.h>
+#  include <sys/processor.h>
+#  include <sys/procset.h>
+#  include <sys/pset.h>
+#  include <sys/types.h>
+#  include <unistd.h>
 #endif
 
 #include "hardware_constants.h"
@@ -44,7 +44,7 @@ const void* StartOfNextCacheLine(const void* addr) {
 
 }  // namespace
 
-void FlushFromDataCache(const void *begin, const void *end) {
+void FlushFromDataCache(const void* begin, const void* end) {
   for (; begin < end; begin = StartOfNextCacheLine(begin)) {
     FlushDataCacheLineNoBarrier(begin);
   }

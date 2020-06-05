@@ -11,21 +11,21 @@
 #define DEMOS_COMPILER_SPECIFICS_H_
 
 #if defined(__x86_64__) || defined(_M_AMD64) || defined(_M_X64)
-#define SAFESIDE_X64 1
+#  define SAFESIDE_X64 1
 #elif defined(__i386__) || defined(_M_IX86)
-#define SAFESIDE_IA32 1
+#  define SAFESIDE_IA32 1
 #elif defined(__aarch64__) || defined(__arm64__) || defined(_M_ARM64)
-#define SAFESIDE_ARM64 1
+#  define SAFESIDE_ARM64 1
 #elif defined(__powerpc64__) || defined(__PPC64__) || defined(__powerpc__) || \
     defined(__ppc__) || defined(__PPC__)
-#define SAFESIDE_PPC 1
+#  define SAFESIDE_PPC 1
 #else
 #  error Undefined architecture.
 #endif
 
 #ifdef _MSC_VER
-#define SAFESIDE_MSVC 1
-#define SAFESIDE_NEVER_INLINE __declspec(noinline)
+#  define SAFESIDE_MSVC 1
+#  define SAFESIDE_NEVER_INLINE __declspec(noinline)
 
 // If a function is modified by both `inline` and `SAFESIDE_ALWAYS_INLINE`,
 // MSVC may issue a diagnostic:
@@ -33,21 +33,21 @@
 //
 // To avoid this, put `inline` *before* `SAFESIDE_ALWAYS_INLINE` on any
 // function that will be compiled by MSVC.
-#define SAFESIDE_ALWAYS_INLINE __forceinline
+#  define SAFESIDE_ALWAYS_INLINE __forceinline
 #elif defined(__GNUC__)
-#define SAFESIDE_GNUC 1
-#define SAFESIDE_NEVER_INLINE __attribute__((noinline))
-#define SAFESIDE_ALWAYS_INLINE __attribute__((always_inline))
+#  define SAFESIDE_GNUC 1
+#  define SAFESIDE_NEVER_INLINE __attribute__((noinline))
+#  define SAFESIDE_ALWAYS_INLINE __attribute__((always_inline))
 #else
 #  error Unknown compiler.
 #endif
 
 #ifdef __linux__
-#define SAFESIDE_LINUX 1
+#  define SAFESIDE_LINUX 1
 #elif defined(__APPLE__)
-#define SAFESIDE_MAC 1
+#  define SAFESIDE_MAC 1
 #elif defined(__sun)
-#define SAFESIDE_SOLARIS 1
+#  define SAFESIDE_SOLARIS 1
 #endif
 
 #endif  // DEMOS_COMPILER_SPECIFICS_H_

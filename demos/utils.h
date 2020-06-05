@@ -16,8 +16,7 @@
 // speculative execution to create a microarchitectural side effect in the
 // cache. Also used for latency measurement in the FLUSH+RELOAD technique.
 // Should be inlined to minimize the speculation window.
-inline SAFESIDE_ALWAYS_INLINE
-void ForceRead(const void *p) {
+inline SAFESIDE_ALWAYS_INLINE void ForceRead(const void *p) {
   (void)*reinterpret_cast<const volatile char *>(p);
 }
 

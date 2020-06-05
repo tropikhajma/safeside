@@ -41,14 +41,14 @@
 #include <unistd.h>
 
 #include "cache_sidechannel.h"
+#include "compiler_specifics.h"
 #include "instr.h"
 #include "local_content.h"
 #include "ret2spec_common.h"
 #include "utils.h"
-#include "compiler_specifics.h"
 
 #if SAFESIDE_SOLARIS
-#include <sys/pset.h>
+#  include <sys/pset.h>
 #endif
 
 // Yield the CPU.

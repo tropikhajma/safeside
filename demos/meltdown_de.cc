@@ -44,22 +44,8 @@ constexpr size_t kPrivateDataLength = 16;
 
 // First two characters of each string are always dummy.
 const char *private_data[kPrivateDataLength] = {
-  "XXI",
-  "XXt",
-  "XX'",
-  "XXs",
-  "XX ",
-  "XXa",
-  "XX ",
-  "XXs",
-  "XXe",
-  "XXc",
-  "XXr",
-  "XXe",
-  "XXt",
-  "XX!",
-  "XX!",
-  "XX!",
+    "XXI", "XXt", "XX'", "XXs", "XX ", "XXa", "XX ", "XXs",
+    "XXe", "XXc", "XXr", "XXe", "XXt", "XX!", "XX!", "XX!",
 };
 
 // We must store zero and one as a global variables to avoid optimizing them
@@ -75,15 +61,15 @@ static char LeakByte(size_t offset) {
     size_t safe_offset = run % strlen(public_data);
     sidechannel.FlushOracle();
 
-    ForceRead(isolated_oracle.data() + static_cast<size_t>(
-        public_data[safe_offset]));
+    ForceRead(isolated_oracle.data() +
+              static_cast<size_t>(public_data[safe_offset]));
 
     // This fails with division exception. Whatever is the result of 1 % 0, it
     // cannot be more than 1 and first two characters are dummy in each private
     // string. During the modulo by zero, SIGFPE is raised and the signal
     // handler moves the instruction pointer to the afterspeculation label.
-    ForceRead(isolated_oracle.data() + static_cast<size_t>(
-        private_data[offset][two % zero]));
+    ForceRead(isolated_oracle.data() +
+              static_cast<size_t>(private_data[offset][two % zero]));
 
     std::cout << "Dead code. Must not be printed." << std::endl;
 

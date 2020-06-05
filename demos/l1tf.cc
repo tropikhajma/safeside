@@ -23,9 +23,9 @@
 #include <iostream>
 
 #include <fcntl.h>
+#include <signal.h>
 #include <sys/mman.h>
 #include <sys/types.h>
-#include <signal.h>
 #include <unistd.h>
 
 #include "cache_sidechannel.h"
@@ -96,8 +96,9 @@ static char LeakByte(size_t offset) {
 
 int main() {
   OnSignalMoveRipToAfterspeculation(SIGSEGV);
-  private_page = reinterpret_cast<char *>(mmap(nullptr, kPageBytes,
-      PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0));
+  private_page =
+      reinterpret_cast<char *>(mmap(nullptr, kPageBytes, PROT_READ | PROT_WRITE,
+                                    MAP_PRIVATE | MAP_ANONYMOUS, -1, 0));
   memcpy(private_page, private_data, strlen(private_data) + 1);
   std::cout << "Leaking the string: ";
   std::cout.flush();

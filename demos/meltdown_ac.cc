@@ -49,14 +49,14 @@
 // Must be at least a native word size. That's why we pick uintptr_t.
 uintptr_t *public_array = new uintptr_t[strlen(public_data) + 1];
 // Unaligned array of public data shifted by one byte.
-uintptr_t *unaligned_public_data = reinterpret_cast<uintptr_t *>(
-    reinterpret_cast<char *>(public_array) + 1);
+uintptr_t *unaligned_public_data =
+    reinterpret_cast<uintptr_t *>(reinterpret_cast<char *>(public_array) + 1);
 
 // Storage for the private data.
 uintptr_t *private_array = new uintptr_t[strlen(private_data) + 1];
 // Unaligned array of private data shifted by one byte.
-uintptr_t *unaligned_private_data = reinterpret_cast<uintptr_t *>(
-    reinterpret_cast<char *>(private_array) + 1);
+uintptr_t *unaligned_private_data =
+    reinterpret_cast<uintptr_t *>(reinterpret_cast<char *>(private_array) + 1);
 
 static void InitializeUnalignedData() {
   // Initialize unaligned arrays.

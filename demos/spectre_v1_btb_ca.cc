@@ -34,7 +34,7 @@
 #include <iostream>
 
 #if SAFESIDE_SOLARIS
-#include <sys/pset.h>
+#  include <sys/pset.h>
 #endif
 
 #include "cache_sidechannel.h"
@@ -105,8 +105,9 @@ static char LeakByte(size_t offset) {
       // private_data_accessor.
       // We are copying the data in here, because copying them outside of the
       // loop decreases the attack efficiency.
-      pointer = private_data_accessor.get() + static_cast<bool>(pid) * (
-          public_data_accessor.get() - private_data_accessor.get());
+      pointer = private_data_accessor.get() +
+                static_cast<bool>(pid) *
+                    (public_data_accessor.get() - private_data_accessor.get());
     }
 
     for (size_t i = 0; i < kAccessorArrayLength; ++i) {
@@ -118,7 +119,8 @@ static char LeakByte(size_t offset) {
 
       // Only the parent needs to flush the accessor.
       if (pid != 0) {
-        FlushFromDataCache(accessor_bytes, accessor_bytes + sizeof(DataAccessor));
+        FlushFromDataCache(accessor_bytes,
+                           accessor_bytes + sizeof(DataAccessor));
       }
 
       // Speculative fetch at the offset. Architecturally the victim fetches

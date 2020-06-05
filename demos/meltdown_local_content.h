@@ -13,7 +13,7 @@
 #include "compiler_specifics.h"
 
 #if SAFESIDE_LINUX || SAFESIDE_MAC
-#include <signal.h>
+#  include <signal.h>
 #endif
 
 #if SAFESIDE_ARM64
@@ -34,8 +34,8 @@ static void LocalHandler() {
 }
 #endif
 
-static void SignalHandler(
-    int /* signum */, siginfo_t * /* siginfo */, void *context) {
+static void SignalHandler(int /* signum */, siginfo_t * /* siginfo */,
+                          void *context) {
   // On IA32, X64 and PPC moves the instruction pointer to the
   // "afterspeculation" label. On ARM64 moves the instruction pointer to the
   // "LocalHandler" label.
